@@ -26,13 +26,21 @@ body {
 }
 
 #root {
-  height: 100%;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
 }
 
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .header {
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -40,31 +48,42 @@ body {
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--glass-border);
   z-index: 100;
+  flex-shrink: 0;
 }
 
 .game-container {
   flex: 1;
   position: relative;
-  overflow: auto;
-  padding: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.board-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .board {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  max-width: 800px;
-  max-height: 600px;
-  perspective: 1000px;
+  position: absolute;
+  /* Fixed size for internal coordinate system, will be scaled by JS */
+  width: 560px; 
+  height: 400px;
+  transform-origin: center;
+  transition: transform 0.3s ease-out;
 }
 
 .tile {
   position: absolute;
-  width: 40px;
-  height: 54px;
+  width: 44px;
+  height: 60px;
   background: var(--tile-bg);
   border-radius: 4px;
   display: flex;
@@ -72,12 +91,12 @@ body {
   align-items: center;
   cursor: pointer;
   box-shadow: 
-    2px 2px 0 #ccc,
-    4px 4px 0 #999,
-    6px 6px 10px rgba(0,0,0,0.5);
+    1px 1px 0 #ccc,
+    2px 2px 0 #999,
+    3px 3px 5px rgba(0,0,0,0.5);
   transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
   user-select: none;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: #333;
   transform-style: preserve-3d;

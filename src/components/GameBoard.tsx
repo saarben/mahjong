@@ -21,6 +21,27 @@ const GameBoard: React.FC<GameBoardProps> = ({ tileCount, onWin }) => {
   const [tiles, setTiles] = useState<Tile[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const container = document.querySelector('.game-container');
+      if (!container) return;
+      
+      const { width, height } = container.getBoundingClientRect();
+      const boardWidth = 600; // Total width including some padding
+      const boardHeight = 440; // Total height including some padding
+      
+      const scaleX = (width - 40) / boardWidth;
+      const scaleY = (height - 40) / boardHeight;
+      setScale(Math.min(scaleX, scaleY, 1.5)); // Don't scale too much
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   useEffect(() => {
     initializeGame();
   }, [tileCount]);
@@ -67,7 +88,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ tileCount, onWin }) => {
       setSelectedId(null);
       
       // Check win condition
-      if (tiles.filter(t => !t.isMatched).length === 2) {
+      if (tiles.length > 0 && tiles.filter(t => !t.isMatched).length === 2) {
         onWin();
       }
     } else {
@@ -76,22 +97,24 @@ const GameBoard: React.FC<GameBoardProps> = ({ tileCount, onWin }) => {
   };
 
   return (
-    <div className="board">
-      {tiles.map(tile => (
-        <div
-          key={tile.id}
-          className={`tile v-${tile.type} ${tile.isMatched ? 'matched' : ''} ${selectedId === tile.id ? 'selected' : ''} ${isTileSelectable(tile, tiles) ? 'selectable' : 'blocked'}`}
-          style={{
-            left: `${tile.x * 20}px`,
-            top: `${tile.y * 20}px`,
-            zIndex: tile.z * 10 + tile.y,
-            transform: `translate3d(0, 0, ${tile.z * TILE_THICKNESS}px)`
-          }}
-          onClick={() => handleTileClick(tile)}
-        >
-          {tileIcons[tile.type]}{tile.value}
-        </div>
-      ))}
+    <div className="board-wrapper">
+      <div className="board" style={{ transform: `scale(${scale})` }}>
+        {tiles.map(tile => (
+          <div
+            key={tile.id}
+            className={`tile v-${tile.type} ${tile.isMatched ? 'matched' : ''} ${selectedId === tile.id ? 'selected' : ''} ${isTileSelectable(tile, tiles) ? 'selectable' : 'blocked'}`}
+            style={{
+              left: `${tile.x * 22}px`,
+              top: `${tile.y * 22}px`,
+              zIndex: tile.z * 10 + tile.y,
+              transform: `translate3d(0, 0, ${tile.z * TILE_THICKNESS}px)`
+            }}
+            onClick={() => handleTileClick(tile)}
+          >
+            {tileIcons[tile.type]}{tile.value}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
