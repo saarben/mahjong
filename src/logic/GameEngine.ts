@@ -101,15 +101,17 @@ export const isTileSelectable = (tile: Tile, allTiles: Tile[]): boolean => {
 
   const activeTiles = allTiles.filter(t => !t.isMatched);
 
-  // Check if there is a tile directly on top
+  // Check if there is any tile overlapping from above (any higher layer)
   const isBlockedAbove = activeTiles.some(t => 
-    t.z === tile.z + 1 && 
+    t.z > tile.z && 
     Math.abs(t.x - tile.x) < 2 && 
     Math.abs(t.y - tile.y) < 2
   );
   if (isBlockedAbove) return false;
 
-  // Check left and right
+  // Check left and right (same layer, adjacent horizontally)
+  // A tile is blocked horizontally if there is at least one tile overlapping in Y 
+  // on its immediately adjacent horizontal spot (x +/- 2).
   const isBlockedLeft = activeTiles.some(t => 
     t.z === tile.z && 
     t.x === tile.x - 2 && 
