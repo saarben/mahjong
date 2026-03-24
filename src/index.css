@@ -85,20 +85,21 @@ body {
   width: 44px;
   height: 60px;
   background: var(--tile-bg);
+  border: 1.5px solid #222;
   border-radius: 4px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   box-shadow: 
-    1px 1px 0 #ccc,
-    2px 2px 0 #999,
-    3px 3px 5px rgba(0,0,0,0.5);
+    1px 1px 0 #333,
+    2px 2px 0 #444,
+    4px 4px 10px rgba(0,0,0,0.6);
   transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
   user-select: none;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #333;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #111;
   transform-style: preserve-3d;
 }
 
