@@ -102,10 +102,12 @@ export const isTileSelectable = (tile: Tile, allTiles: Tile[]): boolean => {
   const activeTiles = allTiles.filter(t => !t.isMatched);
 
   // Check if there is any tile overlapping from above (any higher layer)
+  // We use a slightly wider Y threshold (2.5) because tiles are visually taller 
+  // than their horizontal step, and partial overlap should block.
   const isBlockedAbove = activeTiles.some(t => 
     t.z > tile.z && 
     Math.abs(t.x - tile.x) < 2 && 
-    Math.abs(t.y - tile.y) < 2
+    Math.abs(t.y - tile.y) < 2.5
   );
   if (isBlockedAbove) return false;
 
@@ -115,12 +117,12 @@ export const isTileSelectable = (tile: Tile, allTiles: Tile[]): boolean => {
   const isBlockedLeft = activeTiles.some(t => 
     t.z === tile.z && 
     t.x === tile.x - 2 && 
-    Math.abs(t.y - tile.y) < 2
+    Math.abs(t.y - tile.y) < 2.5
   );
   const isBlockedRight = activeTiles.some(t => 
     t.z === tile.z && 
     t.x === tile.x + 2 && 
-    Math.abs(t.y - tile.y) < 2
+    Math.abs(t.y - tile.y) < 2.5
   );
 
   return !isBlockedLeft || !isBlockedRight;

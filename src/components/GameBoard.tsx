@@ -98,12 +98,12 @@ const GameBoard: React.FC<GameBoardProps> = ({ tileCount, onWin }) => {
       if (!container) return;
       
       const { width, height } = container.getBoundingClientRect();
-      const boardWidth = 600; // Total width including some padding
-      const boardHeight = 440; // Total height including some padding
+      const boardWidth = 600; 
+      const boardHeight = 540; 
       
       const scaleX = (width - 40) / boardWidth;
       const scaleY = (height - 40) / boardHeight;
-      setScale(Math.min(scaleX, scaleY, 1.5)); // Don't scale too much
+      setScale(Math.min(scaleX, scaleY, 1.5)); 
     };
 
     handleResize();
@@ -174,7 +174,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ tileCount, onWin }) => {
             className={`tile v-${tile.type} ${tile.isMatched ? 'matched' : ''} ${selectedId === tile.id ? 'selected' : ''} ${isTileSelectable(tile, tiles) ? 'selectable' : 'blocked'}`}
             style={{
               left: `${tile.x * 22}px`,
-              top: `${tile.y * 22}px`,
+              top: `${tile.y * 30}px`,
               zIndex: tile.z * 10 + tile.y,
               transform: `translate3d(0, 0, ${tile.z * TILE_THICKNESS}px)`,
               padding: '4px'
