@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import GameBoard from './components/GameBoard';
-import { getPlayerStats, calculateNextDifficulty, onGameWin, PlayerStats } from './logic/DifficultySystem';
+import { getPlayerStats, calculateNextDifficulty, onGameWin } from './logic/DifficultySystem';
+import type { PlayerStats } from './logic/DifficultySystem';
 import './App.css';
 
 function App() {

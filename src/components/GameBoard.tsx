@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Tile, createTileSet, getTurtleLayout, isTileSelectable, areTilesMatching, TILE_WIDTH, TILE_HEIGHT, TILE_THICKNESS } from '../logic/GameEngine';
+import { useState, useEffect } from 'react';
+import type { Tile } from '../logic/GameEngine';
+import { createTileSet, getTurtleLayout, isTileSelectable, areTilesMatching, TILE_THICKNESS } from '../logic/GameEngine';
 
 interface GameBoardProps {
   tileCount: number;
